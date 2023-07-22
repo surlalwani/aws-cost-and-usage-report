@@ -1,27 +1,44 @@
-===============
-AWS Cost Report
-===============
+AWS Resources Report Generator
 
-Simple example script to generate a TSV file using the `AWS Cost Explorer API <https://aws.amazon.com/blogs/aws/new-interactive-aws-cost-explorer-api/>`_.
+This script generates a comprehensive report of various AWS resources, including EC2 instances, S3 buckets, AMIs, and snapshots. The report is generated in the form of an Excel file and can be emailed to the desired recipients using the Simple Email Service (SES).
+Prerequisites
 
-Usage:
+Before running the script, ensure that you have the following prerequisites:
 
-.. code-block:: bash
+    AWS Credentials: Obtain valid AWS access key ID and secret access key with sufficient permissions to access EC2, S3, and SES.
 
-    $ # login to consolidated billing account
-    $ pip3 install -U boto3
-    $ ./aws-cost-and-usage-report.py --days=7 >> results.tsv
+Usage
 
-The ``results.tsv`` file can be opened in your favorite spreadsheet application. Its contents look like:
+    Clone this repository to your local machine.
 
-========== ============= ====================================== ====== ==== =========
-TimeSpan   LinkedAccount Service                                Amount Unit Estimated
-========== ============= ====================================== ====== ==== =========
-2017-10-29 123123123123  AWS CloudTrail                         12.34  USD  False
-2017-10-30 123123123123  ...                                    24.50  USD  False
-...
-2017-11-27 001111111111  AWS CloudTrail                         0      USD  True
-2017-11-27 001111111111  AWS Key Management Service             0.3336 USD  True
-2017-11-27 001111111111  Amazon Elastic Compute Cloud - Compute 411.25 USD  True
-2017-11-27 001111111111  Amazon Elastic Load Balancing          16.201 USD  True
-========== ============= ====================================== ====== ==== =========
+    Update the following variables in the code:
+
+        access_key_id and secret_access_key: Provide your AWS access key ID and secret access key.
+
+        SENDER and RECIPIENT: Specify the sender and recipient email addresses for sending the report.
+
+        BUCKET_NAME and KEY: Provide the name of the S3 bucket where you want to upload the report and the desired object key.
+
+    Run the script using Python: python script.py.
+
+    The script will gather information about running EC2 instances, S3 buckets, AMIs, and snapshots. It will generate an Excel report named AWSresourcesReport.xlsx in the /tmp/ directory.
+
+    The report will contain multiple sheets, each presenting information about a specific AWS resource.
+
+    The report will also include visualizations such as a bar chart depicting the time consumption of EC2 instances.
+
+    The generated report will be uploaded to the specified S3 bucket.
+
+    An email containing the report will be sent using SES to the specified recipient.
+
+Additional Considerations
+
+    Ensure that you have the necessary IAM permissions to access and manage the desired AWS resources.
+
+    Customize the script as per your requirements, such as adding more AWS resources or modifying the report format.
+
+    Schedule the script to run periodically using AWS Lambda or any other desired method to automate the report generation process.
+
+Please note that this README provides a high-level overview of the script's functionality. For detailed usage and configuration instructions, refer to the comments in the code and the official documentation for AWS services and Python libraries used.
+
+Feel free to reach out if you have any questions or need further assistance.
